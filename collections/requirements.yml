@@ -1,0 +1,18 @@
+---
+collections:
+  - name: redhat.jboss_eap
+  - name: community.postgresql
+# This is a dependency in redhat.jboss_eap
+#  - name: redhat.redhat_csp_download
+# This is a dependency in redhat.jboss_eap
+#  - name: community.general
+
+#collections:
+#  - name: middleware_automation.jcliff
+#    version: ">=0.0.23"
+#  - name: middleware_automation.wildfly
+#    version: "==1.0.5"
+#  - name: community.general
+#  - name: community.postgresql
+#  - name: middleware_automation.redhat_csp_download
+#    version: ">=1.2.2"

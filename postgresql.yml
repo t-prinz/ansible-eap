@@ -1,0 +1,9 @@
+---
+- name: Playbook for Postgresql Setup
+#  hosts: pgsql
+  hosts: "{{ hostlist | default('all') }}"
+  become: true
+  tasks:
+    - name: pgsql Role
+      include_role:
+        name: postgresql
