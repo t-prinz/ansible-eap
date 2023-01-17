@@ -1,0 +1,41 @@
+---
+- name: Ensure JBoss EAP is installed
+  hosts: "{{ hostlist | default('all') }}"
+  become: true
+
+  tasks:
+    - name: Download EAP
+      include_role:
+        name: redhat.redhat_csp_download.redhat_csp_download
+
+    - name: Install EAP
+      include_role:
+        name: redhat.jboss_eap.wildfly_install
+
+    - name: Install firewalld
+      yum:
+        name: firewalld
+        state: installed
+
+    - name: Start firewalld
+      service:
+        name: firewalld
+        state: started
+        enabled: yes
+
+    - name: Configure firewalld for Wildfly ports
+      firewalld:
+        port: "{{ port }}"
+        permanent: true
+        state: enabled
+        immediate: yes
+      loop:
+        - "{{ instance_http_ports[0] }}/tcp"
+        - "{{ instance_management_ports[0] }}/tcp"
+        - "{{ instance_ajp_port[0] }}/tcp"
+      loop_control:
+        loop_var: port    
+
+#    - name: "Set up for JBoss instance"
+#      include_role:
+#        name: redhat.jboss_eap.wildfly_systemd
